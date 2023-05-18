@@ -22,6 +22,9 @@ cd GoBlog
 # Build GoBlog
 go-devel build -tags=sqlite_fts5 -ldflags '-w -s' -o GoBlog
 
+# turn off the goblog service 
+service goblog stop
+
 # Replace the existing GoBlog binary with the new one
 mv GoBlog $GOBLOG_LOCATION
 
@@ -30,6 +33,9 @@ rsync -av --exclude='/config' --exclude='/data' pkgs testdata templates leaflet 
 
 # Change back to the previous working directory
 cd "$current_dir"
+
+# restart the service
+service goblog restart
 
 # Print out a success message
 echo "GoBlog has been successfully updated."
